@@ -9,12 +9,12 @@ const Profile = ({
     login: { username},
     picture: { medium },
     email,
-    id
+    location: {city}
   },
   onPress
 }) => (
-  <Card style={{ padding:10, margin: 10}}>
-  <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+  <Card style={{ padding:0, margin: 0}}>
+  <View style={{ justifyContent: 'flex-start', alignItems: 'stretch' }}>
     
     <Image
       style={styles.circle}
@@ -22,10 +22,11 @@ const Profile = ({
       
     />
     <Text
-      onPress={onPress}
       style={styles.text}
       
-    >{`${first}  ${last}`}</Text>
+    >Name :- {`${first}  ${last}`}</Text>
+    <Text>Email :- {`${email}`}</Text>
+    <Text>City :- {`${city}`}</Text>
   </View>
   </Card>
 )
@@ -44,7 +45,7 @@ export default class App extends React.Component {
 
   async fetchUsers() {
     this.setState({ loading: true })
-    const users = await axios.get(`https://randomuser.me/api?results=120`)
+    const users = await axios.get(`https://randomuser.me/api?results=3`)
     this.setState({ profiles: users.data.results })
     this.setState({ loading: false })
   }
@@ -64,7 +65,6 @@ export default class App extends React.Component {
         <ScrollView style={styles.container}>
           {profiles.map(profile => (
             <Profile
-              onPress={() => Alert.alert(`You tapped ${profile.login.username}`)}
               profile={profile}
               
             />
